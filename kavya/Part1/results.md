@@ -9,6 +9,15 @@
 - Dropout: 0.1
 - Parameters: 3,270,815
 
+## Design choices
+- **4 Transformer layers:** This gives the model enough depth to learn useful language patterns while keeping training practical on the available GPU.
+- **d_model = 256:** A hidden size of 256 provides enough representation capacity for a character-level TinyStories model without making the model unnecessarily large.
+- **8 attention heads:** With d_model 256, 8 heads gives 32 dimensions per head, which allows the model to learn different attention patterns while keeping the dimensions balanced.
+- **Context length = 128:** A 128-character context is long enough to capture short story structure and local dependencies while keeping memory usage and training time manageable.
+- **Learning rate = 3e-4:** This is a commonly stable learning rate for AdamW with Transformer models and gave a good balance between learning speed and training stability.
+- **500 warm-up steps:** Warm-up gradually increases the learning rate at the beginning of training, which helps avoid unstable updates before the model parameters settle.
+- **Dropout = 0.1:** A small amount of dropout provides regularization and helps reduce overfitting without removing too much information during training.
+
 ## Training
 - Epochs: 10
 - Batch size: 64
